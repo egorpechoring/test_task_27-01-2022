@@ -1,0 +1,50 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Daily average price by selected period</p>
+    <form asp-page-handler="DailyAverage" method="post">
+        <input id="Region" type="text" name="region" />
+        <input id="StartDateTime" type="date" name="start" />
+        <input id="EndDateTime" type="date" name="end" />
+
+        <input type="submit" value="Load">
+    </form>
+    <div>
+        @if (Model.DailyPriceRangeVM != null)
+        {
+            @foreach (var child in Model.DailyPriceRangeVM.DailyPriceVMs)
+            {
+                <div>
+                    @child.Year/@child.Month/@child.Day - @child.AveragePrice euros
+                </div>
+            }
+        }
+    </div>
+
+    <br />
+
+    <p>Hourly price by selected period</p>
+    <form asp-page-handler="Hourly" method="post">
+        <input id="Region" type="text" name="region" />
+        <input id="StartDateTime" type="date" name="start" />
+        <input id="EndDateTime" type="date" name="end" />
+
+        <input type="submit" value="Load">
+    </form>
+    <div>
+        @if (Model.HourlyPriceRangeVM != null)
+        {
+            @foreach (var child in Model.HourlyPriceRangeVM.HourlyPriceVMs)
+            {
+                <div>
+                    @child.Year/@child.Month/@child.Day @child.Hour:00 - @child.Price euros
+                </div>
+            }
+        }
+    </div>
+</div>
